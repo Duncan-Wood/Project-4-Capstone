@@ -1,14 +1,16 @@
 from rest_framework import generics, viewsets
 from .models import Step, UserStep, TimeTracker, UserAddiction, MoneyTracker
-from .serializers import UserSerializer, StepSerializer, UserStepSerializer, TimeTrackerSerializer, UserAddictionSerializer, MoneyTrackerSerializer
+from .serializers import StepSerializer, UserStepSerializer, TimeTrackerSerializer, UserAddictionSerializer, MoneyTrackerSerializer
+
+# from .serializers import UserSerializer
 # from .serializers import UserViewSet
 
 from django.contrib.auth.models import User
 
 # Admin Views
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+# class UserViewSet(viewsets.ModelViewSet):
+#     queryset = User.objects.all()
+#     serializer_class = UserSerializer
     
 class StepList(generics.ListCreateAPIView):
     queryset = Step.objects.all()
@@ -42,10 +44,10 @@ class UserAddictionDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = UserAddiction.objects.all()
     serializer_class = UserAddictionSerializer
 
-class MoneySavedList(generics.ListCreateAPIView):
+class MoneyTrackerList(generics.ListCreateAPIView):
     queryset = MoneyTracker.objects.all()
     serializer_class = MoneyTrackerSerializer
 
-class MoneySavedDetail(generics.RetrieveUpdateDestroyAPIView):
+class MoneyTrackerDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = MoneyTracker.objects.all()
     serializer_class = MoneyTrackerSerializer
