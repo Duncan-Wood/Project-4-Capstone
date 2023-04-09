@@ -1,7 +1,18 @@
-from rest_framework import serializers
+from rest_framework import serializers, viewsets
 from .models import Step, UserStep, TimeTracker, UserAddiction, MoneySaved
+from django.contrib.auth.models import User
 
 # Admin Seriazliers
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'first_name', 'last_name', 'email')
+
+# This class is used to create a new user from the admin panel in the browser (not used in the API)
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
 class StepSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Step
@@ -9,10 +20,7 @@ class StepSerializer(serializers.HyperlinkedModelSerializer):
 
 class UserStepSerializer(serializers.HyperlinkedModelSerializer):
     step = StepSerializer()
-    user = serializers.HyperlinkedRelatedField(
-        view_name='user_detail',
-        queryset=User.objects.all()
-    )
+    user = UserSerializer()
 
     class Meta:
         model = UserStep
@@ -26,10 +34,7 @@ class TimeTrackerSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('id', 'user_step', 'time_spent', 'date')
 
 class UserAddictionSerializer(serializers.HyperlinkedModelSerializer):
-    user = serializers.HyperlinkedRelatedField(
-        view_name='user_detail',
-        queryset=User.objects.all()
-    )
+    user = UserSerializer()
     time_trackers = TimeTrackerSerializer(many=True, read_only=True)
 
     class Meta:
@@ -37,10 +42,7 @@ class UserAddictionSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('id', 'user', 'addiction', 'start_date', 'time_trackers')
 
 class MoneySavedSerializer(serializers.HyperlinkedModelSerializer):
-    user = serializers.HyperlinkedRelatedField(
-        view_name='user_detail',
-        queryset=User.objects.all()
-    )
+    user = UserSerializer()
 
     class Meta:
         model = MoneySaved
