@@ -1,8 +1,18 @@
-from django.urls import path
+from django.urls import path, include
+
+from rest_framework.routers import DefaultRouter
 
 from .views import StepList, StepDetail, UserStepList, UserStepDetail, TimeTrackerList, TimeTrackerDetail, UserAddictionList, UserAddictionDetail, MoneySavedList, MoneySavedDetail
+from .views import UserViewSet
+
+# Create a router and register UserViewSet
+router = DefaultRouter()
+router.register(r'users', UserViewSet)
 
 urlpatterns = [
+    # Router URLs
+    path('', include(router.urls)),
+
     # Step URLs
     path('steps/', StepList.as_view(), name='step-list'),
     path('steps/<int:pk>/', StepDetail.as_view(), name='step-detail'),

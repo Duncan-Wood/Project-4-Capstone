@@ -1,24 +1,19 @@
-from rest_framework import serializers, viewsets
-from .models import Step, UserStep, TimeTracker, UserAddiction, MoneySaved
+from rest_framework import serializers
+from .models import Step, UserStep, TimeTracker, UserAddiction, MoneyTracker
 from django.contrib.auth.models import User
 
-# Admin Seriazliers
+# Admin Serializers
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'username', 'first_name', 'last_name', 'email')
+        fields = ('id', 'username', 'email')
 
-# This class is used to create a new user from the admin panel in the browser (not used in the API)
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
-class StepSerializer(serializers.HyperlinkedModelSerializer):
+class StepSerializer(serializers.ModelSerializer):
     class Meta:
         model = Step
-        fields = ('id', 'name', 'description', 'status', 'created_at', 'updated_at')
+        fields = ('id', 'name', 'description')
 
-class UserStepSerializer(serializers.HyperlinkedModelSerializer):
+class UserStepSerializer(serializers.ModelSerializer):
     step = StepSerializer()
     user = UserSerializer()
 
@@ -26,24 +21,24 @@ class UserStepSerializer(serializers.HyperlinkedModelSerializer):
         model = UserStep
         fields = ('id', 'user', 'step', 'completed', 'completed_at')
 
-class TimeTrackerSerializer(serializers.HyperlinkedModelSerializer):
+class TimeTrackerSerializer(serializers.ModelSerializer):
     user_step = UserStepSerializer()
 
     class Meta:
         model = TimeTracker
         fields = ('id', 'user_step', 'time_spent', 'date')
 
-class UserAddictionSerializer(serializers.HyperlinkedModelSerializer):
+class UserAddictionSerializer(serializers.ModelSerializer):
     user = UserSerializer()
     time_trackers = TimeTrackerSerializer(many=True, read_only=True)
 
     class Meta:
         model = UserAddiction
-        fields = ('id', 'user', 'addiction', 'start_date', 'time_trackers')
+        fields = ('id', 'user', 'name', 'description', 'start_date', 'time_trackers')
 
-class MoneySavedSerializer(serializers.HyperlinkedModelSerializer):
+class MoneyTrackerSerializer(serializers.ModelSerializer):
     user = UserSerializer()
 
     class Meta:
-        model = MoneySaved
-        fields = ('id', 'user', 'amount_saved', 'currency')
+        model = MoneyTracker
+        fields = ('id', 'user', 'duration', 'amount', 'time_tracker', 'currency')
