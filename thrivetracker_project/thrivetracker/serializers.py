@@ -2,7 +2,7 @@ from rest_framework import serializers
 from .models import Step, UserStep, TimeTracker, UserAddiction, MoneyTracker
 from django.contrib.auth.models import User
 
-# Admin Serializers
+## Admin Serializers
 # class UserSerializer(serializers.ModelSerializer):
 #     class Meta:
 #         model = User
@@ -11,7 +11,7 @@ from django.contrib.auth.models import User
 class StepSerializer(serializers.ModelSerializer):
     class Meta:
         model = Step
-        fields = ('id', 'name', 'description')
+        fields = ('id', 'step', 'description')
 
 class UserStepSerializer(serializers.ModelSerializer):
     class Meta:
@@ -23,13 +23,16 @@ class UserAddictionSerializer(serializers.ModelSerializer):
         model = UserAddiction
         fields = ('id', 'user', 'addiction', 'description')
 
-class TimeTrackerSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = TimeTracker
-        fields = ('id', 'user', 'start_time', 'end_time', 'duration')
-
 class MoneyTrackerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = MoneyTracker
-        fields = ('id', 'user', 'time_tracker', 'amount')
+        fields = ('id', 'amount')
+
+class TimeTrackerSerializer(serializers.ModelSerializer):
+    user_addiction = serializers.PrimaryKeyRelatedField(queryset=UserAddiction.objects.all())
+    money_tracker = MoneyTrackerSerializer()
+
+    class Meta:
+        model = TimeTracker
+        fields = ('id', 'user', 'user_addiction', 'start_time', 'end_time', 'duration', 'money_tracker')

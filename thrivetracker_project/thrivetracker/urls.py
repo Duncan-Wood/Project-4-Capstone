@@ -19,7 +19,7 @@ urlpatterns = [
 
     # UserStep URLs
     path('user-steps/', UserStepList.as_view(), name='user-step-list'),
-    path('usersteps/<int:pk>/', UserStepDetail.as_view(), name='user-step-detail'),
+    path('user-steps/<int:pk>/', UserStepDetail.as_view(), name='user-step-detail'),
 
     # TimeTracker URLs
     path('time-trackers/', TimeTrackerList.as_view(), name='time-tracker-list'),

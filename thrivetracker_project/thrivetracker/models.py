@@ -3,11 +3,11 @@ from django.conf import settings
 import datetime
 
 class Step(models.Model):
-    name = models.CharField(max_length=150)
+    step = models.CharField(max_length=150)
     description = models.TextField()
 
     def __str__(self):
-        return self.name
+        return self.step
 
 class UserStep(models.Model):
     USER_STEP_STATUS_CHOICES = (
@@ -35,23 +35,24 @@ class UserStep(models.Model):
     #         self.step, self.swap_step = self.swap_step, None
     #         self.save()
 
-class TimeTracker(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='time_trackers', null=True)
-    start_time = models.DateTimeField()
-    end_time = models.DateTimeField()
-    duration = models.DurationField(default = datetime.timedelta(0))
-    money_tracker = models.OneToOneField('MoneyTracker', null=True, blank=True, on_delete=models.SET_NULL)  # Add OneToOneField for MoneyTracker
-
-    def __str__(self):
-        return f'TimeTracker {self.pk} for User {self.user.username}'
-
 class UserAddiction(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_addictions', null=True)
     addiction = models.CharField(max_length=150)
     description = models.TextField()
 
     def __str__(self):
-        return f'UserAddiction for User {self.user.username}: {self.addiction}'
+        return self.addiction
+
+class TimeTracker(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='time_trackers', null=True)
+    user_addiction = models.ForeignKey(UserAddiction, null=True, blank=True, on_delete=models.SET_NULL)  # Add ForeignKey for UserAddiction
+    start_time = models.DateTimeField()
+    end_time = models.DateTimeField()
+    duration = models.DurationField(default = datetime.timedelta(0))
+    money_tracker = models.OneToOneField('MoneyTracker', null=True, blank=True, on_delete=models.SET_NULL)  # Add OneToOneField for MoneyTracker
+
+    def __str__(self):
+        return f'TimeTracker for {self.user_addiction}'
     
 # money tracker model to store the amount of money tracker by the user based on the duration of the time tracker
 class MoneyTracker(models.Model):
@@ -61,6 +62,6 @@ class MoneyTracker(models.Model):
 
     def __str__(self):
         try:
-            return f'MoneyTracker {self.pk} for User {self.user.username} and TimeTracker {self.time_tracker.pk}'
+            return f'MoneyTracker {self.pk} for User {self.user.username} and TimeTracker {self.time_tracker.user_addiction}'
         except TimeTracker.DoesNotExist:
             return f'MoneyTracker {self.pk} for User {self.user.username}'
