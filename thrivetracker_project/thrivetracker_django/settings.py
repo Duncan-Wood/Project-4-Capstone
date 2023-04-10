@@ -12,6 +12,10 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-g1eg!864#^bmgn47kcq&iocn=jr_bvu^0mg)^hq&d%g1e&7u&8'
+SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-g1eg!864#^bmgn47kcq&iocn=jr_bvu^0mg)^hq&d%g1e&7u&8')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -40,6 +44,10 @@ INSTALLED_APPS = [
     'thrivetracker',
     'rest_framework',
     'corsheaders',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'dj_rest_auth',
+    'dj_rest_auth.registration'
 ]
 
 REST_FRAMEWORK = {
@@ -47,9 +55,10 @@ REST_FRAMEWORK = {
     # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+        'rest_framework.permissions.IsAuthenticated',
     ],
     'SERIALIZERS': {
-        'UserProfileSerializer': '/Users/duncanwood/Desktop/GA/SEIR123/Projects/Project4/Project-4-Capstone/thrivetracker_project/thrivetracker/serializers.py.UserProfileSerializer'
+        'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
     }
 }
 
@@ -62,8 +71,13 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "corsheaders.middleware.CorsMiddleware",
-    "django.middleware.common.CommonMiddleware",
 ]
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
 
 CORS_ALLOWED_ORIGINS = [
     # WE WOULD NEED TO ADD THE URL OF THE FRONTEND HERE
