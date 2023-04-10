@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 import datetime
+from django.contrib.auth.models import User
 
 class Step(models.Model):
     step = models.CharField(max_length=150)
@@ -21,19 +22,7 @@ class UserStep(models.Model):
     completed_at = models.DateTimeField(null=True, blank=True)  # Add completed_at field
 
     def __str__(self):
-        return self.step.name
-
-    # def swap_steps(self, new_step_id):
-    #     # Method to swap the step with a new step by updating swap_step field
-    #     self.swap_step = self.step
-    #     self.step = Step.objects.get(id=new_step_id)
-    #     self.save()
-
-    # def undo_swap(self):
-    #     # Method to undo the step swap by reverting back to the original step
-    #     if self.swap_step:
-    #         self.step, self.swap_step = self.swap_step, None
-    #         self.save()
+        return self.step.step
 
 class UserAddiction(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_addictions', null=True)
@@ -61,7 +50,17 @@ class MoneyTracker(models.Model):
     amount = models.DecimalField(max_digits=100, decimal_places=2)
 
     def __str__(self):
-        try:
-            return f'MoneyTracker {self.pk} for User {self.user.username} and TimeTracker {self.time_tracker.user_addiction}'
-        except TimeTracker.DoesNotExist:
-            return f'MoneyTracker {self.pk} for User {self.user.username}'
+        return f'MoneyTracker for {self.user}'
+    
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user_step = models.ForeignKey(UserStep, null=True, blank=True, on_delete=models.SET_NULL)
+    user_addiction = models.ForeignKey(UserAddiction, null=True, blank=True, on_delete=models.SET_NULL)
+    time_tracker = models.ForeignKey(TimeTracker, null=True, blank=True, on_delete=models.SET_NULL)
+    money_tracker = models.ForeignKey(MoneyTracker, null=True, blank=True, on_delete=models.SET_NULL)
+
+    def __str__(self):
+        if self.user:
+            return self.user.username
+        else:
+            return 'UserProfile with no associated User'

@@ -47,7 +47,10 @@ REST_FRAMEWORK = {
     # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ]
+    ],
+    'SERIALIZERS': {
+        'UserProfileSerializer': '/Users/duncanwood/Desktop/GA/SEIR123/Projects/Project4/Project-4-Capstone/thrivetracker_project/thrivetracker/serializers.py.UserProfileSerializer'
+    }
 }
 
 MIDDLEWARE = [
@@ -62,18 +65,19 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
 ]
 
-# CORS_ALLOW_ALL_ORIGINS = True
-
-# CSRF_TRUSTED_ORIGINS = [
-#     "http://localhost:3000"
-# ]
-
 CORS_ALLOWED_ORIGINS = [
     # WE WOULD NEED TO ADD THE URL OF THE FRONTEND HERE
     "https://example.com",
     "https://sub.example.com",
     "http://localhost:8080",
+    "http://localhost:3000",
     "http://127.0.0.1:9000",
+]
+
+CORS_ALLOW_ALL_ORIGINS = True
+
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:3000"
 ]
 
 ROOT_URLCONF = 'thrivetracker_django.urls'

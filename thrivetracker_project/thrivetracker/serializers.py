@@ -1,12 +1,7 @@
 from rest_framework import serializers
-from .models import Step, UserStep, TimeTracker, UserAddiction, MoneyTracker
-from django.contrib.auth.models import User
+from .models import UserProfile, Step, UserStep, TimeTracker, UserAddiction, MoneyTracker
 
-## Admin Serializers
-# class UserSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = User
-#         fields = ('id', 'username', 'email')
+# Admin Serializers
 
 class StepSerializer(serializers.ModelSerializer):
     class Meta:
@@ -24,7 +19,7 @@ class UserAddictionSerializer(serializers.ModelSerializer):
         fields = ('id', 'user', 'addiction', 'description')
 
 class MoneyTrackerSerializer(serializers.ModelSerializer):
-
+    # come back and add functionality to add a money tracker to a time tracker, but not show the time tracker in the time tracker serializer (only show the money tracker)
     class Meta:
         model = MoneyTracker
         fields = ('id', 'amount')
@@ -36,3 +31,13 @@ class TimeTrackerSerializer(serializers.ModelSerializer):
     class Meta:
         model = TimeTracker
         fields = ('id', 'user', 'user_addiction', 'start_time', 'end_time', 'duration', 'money_tracker')
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    user_step = UserStepSerializer(many=True)
+    user_addiction = UserAddictionSerializer(many=True)
+    time_tracker = TimeTrackerSerializer(many=True)
+    money_tracker = MoneyTrackerSerializer(many=True)
+
+    class Meta:
+        model = UserProfile
+        fields = ('id', 'user', 'user_step', 'user_addiction', 'time_tracker', 'money_tracker')
