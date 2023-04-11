@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import UserProfile, Step, UserStep, TimeTracker, UserAddiction, MoneyTracker
+from .models import Token, UserProfile, Step, UserStep, TimeTracker, UserAddiction, MoneyTracker
 
 # Admin Serializers
 
@@ -40,3 +40,8 @@ class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserProfile
         fields = ('id', 'user', 'user_addiction', 'time_tracker', 'money_tracker')
+
+class TokenSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Token
+        fields = '__all__'

@@ -66,3 +66,12 @@ class UserProfile(models.Model):
             return self.user.username
         else:
             return 'UserProfile with no associated User'
+        
+class Token(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='tokens')
+    name = models.CharField(max_length=150)
+    description = models.TextField()
+    earned_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name

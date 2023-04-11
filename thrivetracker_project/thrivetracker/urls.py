@@ -1,7 +1,10 @@
 from django.urls import path
+from rest_framework.routers import DefaultRouter
 
-from .views import UserList, UserDetail, StepList, StepDetail, UserStepList, UserStepDetail, TimeTrackerList, TimeTrackerDetail, UserAddictionList, UserAddictionDetail, MoneyTrackerList, MoneyTrackerDetail
+from .views import TokenViewSet, UserList, UserDetail, StepList, StepDetail, UserStepList, UserStepDetail, TimeTrackerList, TimeTrackerDetail, UserAddictionList, UserAddictionDetail, MoneyTrackerList, MoneyTrackerDetail
 
+router = DefaultRouter()
+router.register(r'tokens', TokenViewSet, basename='token')
 
 urlpatterns = [
     # Step URLs
@@ -30,6 +33,7 @@ urlpatterns = [
     path('users/<int:pk>/', UserDetail.as_view(), name='user-detail'),
 ]
 
+urlpatterns += router.urls
 
 # Virtual AA
 
