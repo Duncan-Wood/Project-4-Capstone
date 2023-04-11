@@ -33,11 +33,10 @@ class TimeTrackerSerializer(serializers.ModelSerializer):
         fields = ('id', 'user', 'user_addiction', 'start_time', 'end_time', 'duration', 'money_tracker')
 
 class UserProfileSerializer(serializers.ModelSerializer):
-    user_step = UserStepSerializer(many=True)
     user_addiction = UserAddictionSerializer(many=True)
     time_tracker = TimeTrackerSerializer(many=True)
     money_tracker = MoneyTrackerSerializer(many=True)
 
     class Meta:
         model = UserProfile
-        fields = ('id', 'user', 'user_step', 'user_addiction', 'time_tracker', 'money_tracker')
+        fields = ('id', 'user', 'user_addiction', 'time_tracker', 'money_tracker')

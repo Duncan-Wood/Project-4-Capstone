@@ -3,6 +3,8 @@ from django.conf import settings
 import datetime
 from django.contrib.auth.models import User
 
+
+#put steps on the shelf for now
 class Step(models.Model):
     step = models.CharField(max_length=150)
     description = models.TextField()
@@ -30,7 +32,7 @@ class UserAddiction(models.Model):
     description = models.TextField()
 
     def __str__(self):
-        return self.addiction
+        return f'{self.addiction} test '
 
 class TimeTracker(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='time_trackers', null=True)
@@ -54,7 +56,7 @@ class MoneyTracker(models.Model):
     
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    user_step = models.ForeignKey(UserStep, null=True, blank=True, on_delete=models.SET_NULL)
+    # user_step = models.ForeignKey(UserStep, null=True, blank=True, on_delete=models.SET_NULL)
     user_addiction = models.ForeignKey(UserAddiction, null=True, blank=True, on_delete=models.SET_NULL)
     time_tracker = models.ForeignKey(TimeTracker, null=True, blank=True, on_delete=models.SET_NULL)
     money_tracker = models.ForeignKey(MoneyTracker, null=True, blank=True, on_delete=models.SET_NULL)

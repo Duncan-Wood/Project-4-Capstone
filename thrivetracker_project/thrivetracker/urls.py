@@ -29,3 +29,13 @@ urlpatterns = [
     path('users/', UserList.as_view(), name='user-list'),
     path('users/<int:pk>/', UserDetail.as_view(), name='user-detail'),
 ]
+
+
+# Virtual AA
+
+# steer away from the steps because recovery is not linear
+# Get tokens, rewards for time tracker milestones
+ # you're on day 1/30 towards the next token
+ # gameify the process of recovery
+ # perfect for people not comfortable going to meetings
+# Get rewards for posting diary posts/ moods/ triggers/ progress
