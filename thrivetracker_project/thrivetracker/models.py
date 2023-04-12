@@ -1,32 +1,35 @@
 from django.db import models
 from django.conf import settings
 
+from django.db import models
+from django.conf import settings
+
+class TimeTracker(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='time_trackers', null=True)
+    user_addiction = models.OneToOneField('UserAddiction', null=True, blank=True, on_delete=models.SET_NULL)
+    start_time = models.DateTimeField()
+    end_time = models.DateTimeField(null=True, blank=True)
+    savings = models.OneToOneField('Saving', null=True, blank=True, on_delete=models.SET_NULL)
+
+    def __str__(self):
+        return f'TimeTracker for {self.user_addiction}'
+
 class UserAddiction(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_addictions', null=True)
     addiction = models.CharField(max_length=150)
     description = models.TextField()
 
     def __str__(self):
-        return f'{self.addiction} test '
+        return f'{self.addiction}'
 
-class TimeTracker(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='time_trackers', null=True)
-    user_addiction = models.ForeignKey(UserAddiction, null=True, blank=True, on_delete=models.SET_NULL)  # Add ForeignKey for UserAddiction
-    start_time = models.DateTimeField()
-    end_time = models.DateTimeField(null=True, blank=True)
-    money_tracker = models.OneToOneField('MoneyTracker', null=True, blank=True, on_delete=models.SET_NULL)  # Add OneToOneField for MoneyTracker
-
-    def __str__(self):
-        return f'TimeTracker for {self.user_addiction}'
-    
-# money tracker model to store the amount of money tracker by the user based on the duration of the time tracker
-class MoneyTracker(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='money_trackers', null=True)
+class Saving(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='savings', null=True)
     time_tracker = models.OneToOneField(TimeTracker, null=True, blank=True, on_delete=models.SET_NULL)
-    amount = models.DecimalField(max_digits=100, decimal_places=2)
+    money_per_day = models.DecimalField(max_digits=100, decimal_places=2)
+    time_per_day = models.DecimalField(max_digits=100, decimal_places=2)
 
     def __str__(self):
-        return f'MoneyTracker for {self.user}'
+        return f'Savings for {self.user}'
 
 class Note(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='notes')
@@ -34,16 +37,17 @@ class Note(models.Model):
     mood = models.CharField(max_length=150)
     triggers = models.TextField()
     body = models.TextField()
-    time_tracker = models.ForeignKey(TimeTracker, on_delete=models.CASCADE, related_name='notes')
+    time_tracker = models.ForeignKey(TimeTracker, on_delete=models.CASCADE, related_name='notes', null=True, blank=True)
 
     def __str__(self):
-        return self.title   
+        return self.title
 
 class Token(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='tokens')
     name = models.CharField(max_length=150)
     description = models.TextField()
     earned_at = models.DateTimeField(auto_now_add=True)
+    time_tracker = models.ForeignKey(TimeTracker, on_delete=models.CASCADE, related_name='tokens', null=True, blank=True)
 
     def __str__(self):
         return self.name

@@ -23,13 +23,13 @@ class UserAddictionDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = UserAddiction.objects.all()
     serializer_class = UserAddictionSerializer
 
-class MoneyTrackerList(generics.ListCreateAPIView):
-    queryset = MoneyTracker.objects.all()
-    serializer_class = MoneyTrackerSerializer
+class SavingList(generics.ListCreateAPIView):
+    queryset = Saving.objects.all()
+    serializer_class = SavingSerializer
 
-class MoneyTrackerDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = MoneyTracker.objects.all()
-    serializer_class = MoneyTrackerSerializer
+class SavingDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Saving.objects.all()
+    serializer_class = SavingSerializer
 
 class NoteListView(generics.ListCreateAPIView):
     queryset = Note.objects.all()

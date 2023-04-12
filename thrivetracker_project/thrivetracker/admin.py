@@ -6,7 +6,7 @@ from .models import *
 admin.site.register(UserAddiction)
 admin.site.register(TimeTracker)
 admin.site.register(Note)
-admin.site.register(MoneyTracker)
+admin.site.register(Saving)
 admin.site.register(Token)
 
 

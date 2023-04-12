@@ -20,8 +20,8 @@ urlpatterns = [
     path('notes/<int:pk>/', NoteDetailView.as_view(), name='note-detail'),
 
     # MoneySaved URLs
-    path('money-trackers/', MoneyTrackerList.as_view(), name='money-tracker-list'),
-    path('money-trackers/<int:pk>/', MoneyTrackerDetail.as_view(), name='money-tracker-detail'),
+    path('savings/', SavingList.as_view(), name='savings-list'),
+    path('savings/<int:pk>/', SavingDetail.as_view(), name='savings-detail'),
 
 
     

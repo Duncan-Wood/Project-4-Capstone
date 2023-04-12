@@ -1,19 +1,19 @@
 from rest_framework import serializers
-from .models import Token, Note, TimeTracker, UserAddiction, MoneyTracker
+from .models import *
 
 class UserAddictionSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserAddiction
         fields = '__all__'
 
-class MoneyTrackerSerializer(serializers.ModelSerializer):
+class SavingSerializer(serializers.ModelSerializer):
     class Meta:
-        model = MoneyTracker
+        model = Saving
         fields = '__all__'
 
 class TimeTrackerSerializer(serializers.ModelSerializer):
     user_addiction = UserAddictionSerializer()
-    money_tracker = MoneyTrackerSerializer()
+    savings = SavingSerializer()
 
     class Meta:
         model = TimeTracker
