@@ -42,7 +42,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     # Trying to implement JWT Auth
-    'rest_framework_simplejwt.token_blacklist'
+    'rest_framework_simplejwt.token_blacklist',
+    # extension for money
+    'djmoney',
 ]
 
 REST_FRAMEWORK = {

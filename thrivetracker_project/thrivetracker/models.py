@@ -1,8 +1,8 @@
 from django.db import models
 from django.conf import settings
 
-from django.db import models
-from django.conf import settings
+from djmoney.models.fields import MoneyField
+
 
 class TimeTracker(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='time_trackers', null=True)
@@ -25,8 +25,8 @@ class UserAddiction(models.Model):
 class Saving(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='savings', null=True)
     time_tracker = models.OneToOneField(TimeTracker, null=True, blank=True, on_delete=models.SET_NULL)
-    money_per_day = models.DecimalField(max_digits=100, decimal_places=2)
-    time_per_day = models.DurationField()
+    money_per_day = MoneyField(max_digits=14, decimal_places=2, default_currency='USD')
+    # time_per_day = models.DurationField(null=True, blank=True)
 
     def __str__(self):
         return f'Savings for {self.user}'
@@ -34,9 +34,9 @@ class Saving(models.Model):
 class Note(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='notes')
     title = models.CharField(max_length=150)
-    mood = models.CharField(max_length=150)
-    triggers = models.TextField()
-    body = models.TextField()
+    mood = models.CharField(max_length=150, null=True, blank=True)
+    triggers = models.TextField(null=True, blank=True)
+    body = models.TextField(null=True, blank=True)
     time_tracker = models.ForeignKey(TimeTracker, on_delete=models.CASCADE, related_name='notes', null=True, blank=True)
 
     def __str__(self):

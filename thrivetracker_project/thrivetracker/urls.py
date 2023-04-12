@@ -19,7 +19,7 @@ urlpatterns = [
     path('notes/', NoteListView.as_view(), name='note-list'),
     path('notes/<int:pk>/', NoteDetailView.as_view(), name='note-detail'),
 
-    # MoneySaved URLs
+    # Savings URLs
     path('savings/', SavingList.as_view(), name='savings-list'),
     path('savings/<int:pk>/', SavingDetail.as_view(), name='savings-detail'),
 
