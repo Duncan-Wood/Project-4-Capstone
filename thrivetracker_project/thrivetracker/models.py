@@ -26,7 +26,7 @@ class Saving(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='savings', null=True)
     time_tracker = models.OneToOneField(TimeTracker, null=True, blank=True, on_delete=models.SET_NULL)
     money_per_day = models.DecimalField(max_digits=100, decimal_places=2)
-    time_per_day = models.DecimalField(max_digits=100, decimal_places=2)
+    time_per_day = models.DurationField()
 
     def __str__(self):
         return f'Savings for {self.user}'
