@@ -1,36 +1,11 @@
-from .models import Token, UserProfile, Step, UserStep, TimeTracker, UserAddiction, MoneyTracker
-from .serializers import TokenSerializer, UserProfileSerializer, StepSerializer, UserStepSerializer, TimeTrackerSerializer, UserAddictionSerializer, MoneyTrackerSerializer
+from .models import *
+from .serializers import *
 from rest_framework import generics
 
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-## Admin Views
-
-class UserList(generics.ListCreateAPIView):
-    queryset = UserProfile.objects.all()
-    serializer_class = UserProfileSerializer
-
-class UserDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = UserProfile.objects.all()
-    serializer_class = UserProfileSerializer
-    
-class StepList(generics.ListCreateAPIView):
-    queryset = Step.objects.all()
-    serializer_class = StepSerializer
-
-class StepDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Step.objects.all()
-    serializer_class = StepSerializer
-
-class UserStepList(generics.ListCreateAPIView):
-    queryset = UserStep.objects.all()
-    serializer_class = UserStepSerializer
-
-class UserStepDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = UserStep.objects.all()
-    serializer_class = UserStepSerializer
 
 class TimeTrackerList(generics.ListCreateAPIView):
     queryset = TimeTracker.objects.all()
@@ -56,6 +31,14 @@ class MoneyTrackerDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = MoneyTracker.objects.all()
     serializer_class = MoneyTrackerSerializer
 
+class NoteListView(generics.ListCreateAPIView):
+    queryset = Note.objects.all()
+    serializer_class = NoteSerializer
+
+class NoteDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Note.objects.all()
+    serializer_class = NoteSerializer
+
 class TokenViewSet(viewsets.ModelViewSet):
     queryset = Token.objects.all()
     serializer_class = TokenSerializer
@@ -73,3 +56,30 @@ class TokenViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(token)
         return Response(serializer.data)
     
+
+
+## Meant to work on After GA! IGNORE FOR NOW!!
+
+# class UserList(generics.ListCreateAPIView):
+#     queryset = UserProfile.objects.all()
+#     serializer_class = UserProfileSerializer
+
+# class UserDetail(generics.RetrieveUpdateDestroyAPIView):
+#     queryset = UserProfile.objects.all()
+#     serializer_class = UserProfileSerializer
+    
+# class StepList(generics.ListCreateAPIView):
+#     queryset = Step.objects.all()
+#     serializer_class = StepSerializer
+
+# class StepDetail(generics.RetrieveUpdateDestroyAPIView):
+#     queryset = Step.objects.all()
+#     serializer_class = StepSerializer
+
+# class UserStepList(generics.ListCreateAPIView):
+#     queryset = UserStep.objects.all()
+#     serializer_class = UserStepSerializer
+
+# class UserStepDetail(generics.RetrieveUpdateDestroyAPIView):
+#     queryset = UserStep.objects.all()
+#     serializer_class = UserStepSerializer
