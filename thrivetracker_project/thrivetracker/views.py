@@ -6,14 +6,26 @@ from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
+# bypassing csrf token
+from django.views.decorators.csrf import csrf_exempt
+
+
 
 class TimeTrackerList(generics.ListCreateAPIView):
     queryset = TimeTracker.objects.all()
     serializer_class = TimeTrackerSerializer
+    authentication_classes = []
+    permission_classes = []
 
 class TimeTrackerDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = TimeTracker.objects.all()
     serializer_class = TimeTrackerSerializer
+    authentication_classes = []
+    permission_classes = []
+
+# bypassing csrf token
+time_tracker_list = csrf_exempt(TimeTrackerList.as_view())
+time_tracker_detail = csrf_exempt(TimeTrackerDetail.as_view())
 
 class UserAddictionList(generics.ListCreateAPIView):
     queryset = UserAddiction.objects.all()

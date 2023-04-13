@@ -23,8 +23,9 @@ class UserAddiction(models.Model):
         return f'{self.addiction}'
 
 class Saving(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='savings', null=True)
-    time_tracker = models.OneToOneField(TimeTracker, null=True, blank=True, on_delete=models.SET_NULL)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='savings_user', null=True)
+    # time_tracker = models.OneToOneField(TimeTracker, null=True, blank=True, on_delete=models.SET_NULL)
+    time_tracker = models.ForeignKey(TimeTracker, on_delete=models.CASCADE, related_name='savings_time_tracker', null=True, blank=True)
     money_per_day = MoneyField(max_digits=14, decimal_places=2, default_currency='USD')
     # time_per_day = models.DurationField(null=True, blank=True)
 
@@ -51,8 +52,6 @@ class Token(models.Model):
 
     def __str__(self):
         return self.name
-    
-
     
 ## Meant to work on After GA! IGNORE FOR NOW!!
 
