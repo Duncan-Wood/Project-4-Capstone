@@ -6,10 +6,19 @@ from djmoney.models.fields import MoneyField
 
 class TimeTracker(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='time_trackers', null=True)
-    user_addiction = models.OneToOneField('UserAddiction', null=True, blank=True, on_delete=models.SET_NULL)
+
+    # user_addiction = models.OneToOneField('UserAddiction', null=True, blank=True, on_delete=models.SET_NULL)
+    addiction = models.CharField(max_length=150)
+    addiction_description = models.TextField()
+
     start_time = models.DateTimeField()
     end_time = models.DateTimeField(null=True, blank=True)
-    savings = models.OneToOneField('Saving', null=True, blank=True, on_delete=models.SET_NULL)
+
+    # savings = models.OneToOneField('Saving', null=True, blank=True, on_delete=models.SET_NULL)
+    money_per_day = MoneyField(max_digits=10, decimal_places=2, default_currency='USD', null=True, blank=True)
+
+    notes = models.ManyToManyField('Note', related_name='time_trackers')
+    tokens = models.ManyToManyField('Token', related_name='time_trackers')
 
     def __str__(self):
         return f'TimeTracker for {self.user_addiction}'
@@ -33,22 +42,22 @@ class Saving(models.Model):
         return f'Savings for {self.user}'
 
 class Note(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='notes')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='notes_user')
     title = models.CharField(max_length=150)
     mood = models.CharField(max_length=150, null=True, blank=True)
     triggers = models.TextField(null=True, blank=True)
     body = models.TextField(null=True, blank=True)
-    time_tracker = models.ForeignKey(TimeTracker, on_delete=models.CASCADE, related_name='notes', null=True, blank=True)
+    time_tracker = models.ForeignKey(TimeTracker, on_delete=models.CASCADE, related_name='notes_timetracker', null=True, blank=True)
 
     def __str__(self):
         return self.title
 
 class Token(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='tokens')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='tokens_user')
     name = models.CharField(max_length=150)
     description = models.TextField()
     earned_at = models.DateTimeField(auto_now_add=True)
-    time_tracker = models.ForeignKey(TimeTracker, on_delete=models.CASCADE, related_name='tokens', null=True, blank=True)
+    time_tracker = models.ForeignKey(TimeTracker, on_delete=models.CASCADE, related_name='tokens_timetracker', null=True, blank=True)
 
     def __str__(self):
         return self.name
