@@ -9,8 +9,6 @@ from rest_framework.response import Response
 # bypassing csrf token
 from django.views.decorators.csrf import csrf_exempt
 
-
-
 class TimeTrackerList(generics.ListCreateAPIView):
     queryset = TimeTracker.objects.all()
     serializer_class = TimeTrackerSerializer

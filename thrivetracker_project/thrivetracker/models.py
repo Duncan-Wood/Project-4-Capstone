@@ -12,7 +12,7 @@ class TimeTracker(models.Model):
     addiction_description = models.TextField()
 
     start_time = models.DateTimeField()
-    end_time = models.DateTimeField(null=True, blank=True)
+    end_time = models.DateTimeField(null=True, blank=True, default=None)
 
     # savings = models.OneToOneField('Saving', null=True, blank=True, on_delete=models.SET_NULL)
     money_per_day = MoneyField(max_digits=10, decimal_places=2, default_currency='USD', null=True, blank=True)
@@ -21,7 +21,7 @@ class TimeTracker(models.Model):
     tokens = models.ManyToManyField('Token', related_name='time_trackers')
 
     def __str__(self):
-        return f'TimeTracker for {self.user_addiction}'
+        return f'TimeTracker for {self.addiction}'
 
 class UserAddiction(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_addictions', null=True)
