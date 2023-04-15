@@ -25,22 +25,6 @@ class TimeTrackerDetail(generics.RetrieveUpdateDestroyAPIView):
 time_tracker_list = csrf_exempt(TimeTrackerList.as_view())
 time_tracker_detail = csrf_exempt(TimeTrackerDetail.as_view())
 
-class UserAddictionList(generics.ListCreateAPIView):
-    queryset = UserAddiction.objects.all()
-    serializer_class = UserAddictionSerializer
-
-class UserAddictionDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = UserAddiction.objects.all()
-    serializer_class = UserAddictionSerializer
-
-class SavingList(generics.ListCreateAPIView):
-    queryset = Saving.objects.all()
-    serializer_class = SavingSerializer
-
-class SavingDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Saving.objects.all()
-    serializer_class = SavingSerializer
-
 class NoteListView(generics.ListCreateAPIView):
     queryset = Note.objects.all()
     serializer_class = NoteSerializer
@@ -65,31 +49,3 @@ class TokenViewSet(viewsets.ModelViewSet):
         token = self.get_object()
         serializer = self.get_serializer(token)
         return Response(serializer.data)
-    
-
-
-## Meant to work on After GA! IGNORE FOR NOW!!
-
-# class UserList(generics.ListCreateAPIView):
-#     queryset = UserProfile.objects.all()
-#     serializer_class = UserProfileSerializer
-
-# class UserDetail(generics.RetrieveUpdateDestroyAPIView):
-#     queryset = UserProfile.objects.all()
-#     serializer_class = UserProfileSerializer
-    
-# class StepList(generics.ListCreateAPIView):
-#     queryset = Step.objects.all()
-#     serializer_class = StepSerializer
-
-# class StepDetail(generics.RetrieveUpdateDestroyAPIView):
-#     queryset = Step.objects.all()
-#     serializer_class = StepSerializer
-
-# class UserStepList(generics.ListCreateAPIView):
-#     queryset = UserStep.objects.all()
-#     serializer_class = UserStepSerializer
-
-# class UserStepDetail(generics.RetrieveUpdateDestroyAPIView):
-#     queryset = UserStep.objects.all()
-#     serializer_class = UserStepSerializer
