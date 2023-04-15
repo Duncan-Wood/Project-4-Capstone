@@ -2,7 +2,8 @@
 ![Thrivetracker Screenshot](thrivetracker_project/Assets/screenshot.png)
 
 ## Take a look
-[Thrivetracker has not yet been deployed](https://www.clappisonvet.com/wp-content/uploads/sites/222/2022/02/hang-in-there-baby.png)
+[Thrivetracker has not yet been deployed](https://www.clappisonvet.com/wp-content/uploads/sites/222/2022/02/hang-in-there-baby.png) <br/>
+[Trello Board](https://trello.com/b/WLRA6mGl/project-4-capstone)
 
 # ThriveTracker Backend
 The backend of ThriveTracker is built using Django, a popular Python web framework. Django provides the foundation for the server-side functionality of the application, including handling HTTP requests and responses, managing authentication and authorization (in development), and interacting with databases.
