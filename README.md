@@ -65,5 +65,5 @@ Contributions to the ThriveTracker backend are welcome! If you would like to con
 <br/>
 
 ## Check Out The Frontend!
-To see the code for the backend of Thrivetracker, visit the following link:<br/>
+To see the code for the frontend of Thrivetracker, visit the following link:<br/>
 [ThriveTracker Frontend](https://github.com/Duncan-Wood/ThriveTracker-Frontend)
