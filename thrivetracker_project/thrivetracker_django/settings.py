@@ -16,7 +16,6 @@ from datetime import timedelta
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
@@ -27,7 +26,6 @@ SECRET_KEY = 'django-insecure-g1eg!864#^bmgn47kcq&iocn=jr_bvu^0mg)^hq&d%g1e&7u&8
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -48,20 +46,12 @@ INSTALLED_APPS = [
 ]
 
 REST_FRAMEWORK = {
-    ## Use Django's standard `django.contrib.auth` permissions,
-    ## or allow read-only access for unauthenticated users.
-    # 'DEFAULT_PERMISSION_CLASSES': [
-    #     'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    # ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
-    # 'SERIALIZERS': {
-    #     'UserProfileSerializer': '/Users/duncanwood/Desktop/GA/SEIR123/Projects/Project4/Project-4-Capstone/thrivetracker_project/thrivetracker/serializers.py.UserProfileSerializer'
-    # }
 }
 CORS_ALLOWED_ORIGINS = [
-    # WE WOULD NEED TO ADD THE URL OF THE FRONTEND HERE
+    # WOULD NEED TO ADD THE URL OF THE FRONTEND HERE WHEN DEPLOYED
     "https://example.com",
     "https://sub.example.com",
     "http://localhost:8080",
@@ -73,6 +63,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:3000"
+    # WOULD NEED TO ADD THE URL OF THE FRONTEND HERE WHEN DEPLOYED
 ]
 
 MIDDLEWARE = [
@@ -114,6 +105,8 @@ WSGI_APPLICATION = 'thrivetracker_django.wsgi.application'
 # Figured out a way to use postgresql without entering postgres as username and my password in password
     # Enter psql -U postgres in terminal
     # Enter this command: GRANT postgres TO thrivetrackeruser;
+# Try fixing psql after presentation with this command:
+    # rm /opt/homebrew/var/postgresql@14/postmaster.pid
 
 DATABASES = {
     'default': {
@@ -124,7 +117,6 @@ DATABASES = {
         'HOST': 'localhost'
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -143,9 +135,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
-# # Overwrite the default User model with my custom User model
-# AUTH_USER_MODEL = 'thrivetracker.User'
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
@@ -168,5 +157,3 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# APPEND_SLASH=False 
