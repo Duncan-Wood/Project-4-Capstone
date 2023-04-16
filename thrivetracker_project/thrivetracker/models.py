@@ -24,6 +24,7 @@ class Note(models.Model):
     mood = models.CharField(max_length=150, null=True, blank=True)
     triggers = models.TextField(null=True, blank=True)
     body = models.TextField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
     time_tracker = models.ForeignKey(TimeTracker, on_delete=models.CASCADE, related_name='notes_timetracker', null=True, blank=True)
 
     def __str__(self):
